@@ -1,5 +1,5 @@
 import React from 'react';
-import './Header.css';
+import './Header.scss';
 import SearchIcon from '@material-ui/icons/Search';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
@@ -14,7 +14,7 @@ function Header() {
 
       <div className="header__search">
         <input type="text" className="header__searchInput" />
-        <SearchIcon className="header__searchIcon"></SearchIcon>
+        <SearchIcon className="header__searchIcon" id="laks"></SearchIcon>
       </div>
 
       <div className="header__nav">

@@ -1,5 +1,5 @@
 import React from 'react';
-import './Product.css';
+import './Product.scss';
 
 function Product() {
   return (
@@ -10,12 +10,20 @@ function Product() {
           <small>$</small>
           <strong>19.99</strong>
         </p>
-        <div className="product__rating">⭐⭐⭐</div>
+
+        <div className="product__rating">
+          <span role="img" aria-label="rating">
+            ⭐⭐⭐
+          </span>
+        </div>
+
         <img
           src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi0.wp.com%2Fwww.javatechblog.com%2Fwp-content%2Fuploads%2F2016%2F06%2FBest-books-for-JavaScript-Learning-JavaScript.jpg&f=1&nofb=1"
           alt=""
           className="product__image"
         />
+
+        <button>Add to basket</button>
       </div>
     </div>
   );
