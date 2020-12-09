@@ -1,0 +1,30 @@
+.product {
+  background-color: white;
+  z-index: 1;
+  margin: 10px;
+  padding: 10px;
+}
+
+.product__info {
+  display: flex;
+  flex-direction: column;
+}
+
+.product__rating {
+  display: flex;
+}
+
+.product__image {
+  width: 100%;
+  max-height: 250px;
+  object-fit: contain;
+  margin: 10px 0;
+}
+
+.product__buyButton {
+  padding: 3px 10px;
+  border: rgb(95, 53, 5) 1px solid;
+  background-color: rgb(231, 195, 76);
+  width: fit-content;
+  margin: 0 auto;
+}
