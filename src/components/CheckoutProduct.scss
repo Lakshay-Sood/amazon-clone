@@ -1,0 +1,49 @@
+.checkoutProduct {
+  display: flex;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: white;
+}
+
+.checkoutProduct__image {
+  max-height: 200px;
+  width: 20%;
+  object-fit: contain;
+}
+
+.checkoutProduct__rating {
+  margin-top: 5px;
+}
+
+// .checkoutProduct__removeButton {
+//   padding: 1px 5px;
+//   border: rgb(95, 53, 5) 1px solid;
+//   background-color: rgb(231, 195, 76);
+//   width: fit-content;
+//   margin-top: 20px;
+// }
+
+// svg.checkoutProduct__addRemoveButton {
+//   font-size: 1.2em;
+//   padding: 1px;
+//   border: rgb(95, 53, 5) 1px solid;
+//   background-color: rgb(231, 195, 76);
+// }
+
+.checkoutProduct__quantity {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+
+  .checkoutProduct__addRemoveButton {
+    border: rgb(95, 53, 5) 1px solid;
+    background-color: rgb(231, 195, 76);
+    margin: 0 5px;
+
+    // cuz icons are svg
+    & > svg {
+      font-size: 1.2em;
+      margin-bottom: -4px;
+    }
+  }
+}

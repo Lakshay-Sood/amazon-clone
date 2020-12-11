@@ -3,7 +3,7 @@ import './Product.scss';
 import { useStateValue } from './StateProvider';
 
 function Product({ id, title, price, image, rating }) {
-  const [{ basket }, dispatch] = useStateValue();
+  const [, dispatch] = useStateValue();
   const addToBasket = () => {
     dispatch({
       type: 'ADD_TO_BASKET',
@@ -13,6 +13,7 @@ function Product({ id, title, price, image, rating }) {
         price,
         image,
         rating,
+        quantity: 1,
       },
     });
   };
@@ -20,7 +21,7 @@ function Product({ id, title, price, image, rating }) {
   return (
     <div className="product">
       <div className="product__info">
-        <p>{title}</p>
+        <h4>{title}</h4>
         <p className="product__price">
           <small>$</small>
           <strong>{price}</strong>
@@ -29,8 +30,8 @@ function Product({ id, title, price, image, rating }) {
         <div className="product__rating">
           {Array(rating)
             .fill()
-            .map((_) => (
-              <span role="img" aria-label="rating">
+            .map((_, index) => (
+              <span role="img" aria-label="rating" key={index.toString()}>
                 ⭐
               </span>
             ))}
