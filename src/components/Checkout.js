@@ -1,10 +1,12 @@
 import React from 'react';
+// import React, { useState } from 'react';
 import './Checkout.scss';
 import CheckoutProduct from './CheckoutProduct';
 import { useStateValue } from './StateProvider';
 
 function Checkout() {
   const [{ basket }] = useStateValue();
+  // const [isGift, setIsGift] = useState(false);
 
   const itemsInBasket = basket.reduce((acc, item) => acc + item.quantity, 0);
   const subtotalAmount = basket.reduce((acc, item) => acc + item.price * item.quantity, 0);
@@ -51,6 +53,7 @@ function Checkout() {
           </h3>
           <label>
             <input type="checkbox" name="gift" />
+            {/* <input type="checkbox" name="gift" {isGift == true ? 'checked' : ''}/> */}
             <small>This order contains a gift</small>
           </label>
           <br />

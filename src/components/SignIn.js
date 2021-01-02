@@ -1,27 +1,48 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { auth } from '../firebase';
+import { useStateValue } from './StateProvider';
 
 function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const [, dispatch] = useStateValue();
+
   const userSignIn = (e) => {
     e.preventDefault();
     console.warn({ email, password });
+
     // firebase login code
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((auth_data) => {
+        // user sign in successful
+        console.log(auth_data);
+
+        dispatch({
+          type: 'SIGN_IN_USER',
+          user: auth_data.user,
+        });
+      })
+      .catch((err) => alert(err.message));
   };
 
   const userRegister = (e) => {
     e.preventDefault();
     console.warn({ email, password });
-    // firebase register code
 
+    // firebase register code
     auth
       .createUserWithEmailAndPassword(email, password)
-      .then((auth) => {
+      .then((auth_data) => {
         // user registration successful
-        console.log(auth);
+        console.log(auth_data);
+
+        dispatch({
+          type: 'REGISTER_USER',
+          user: auth_data.user,
+        });
       })
       .catch((err) => alert(err.message));
   };

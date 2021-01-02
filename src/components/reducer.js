@@ -39,6 +39,22 @@ export const reducer = (state, action) => {
       };
       break;
 
+    case 'SIGN_IN_USER':
+    case 'REGISTER_USER':
+      const signedInUser = action.user;
+      return {
+        ...state,
+        user: signedInUser,
+      };
+      break;
+
+    case 'LOG_OUT_USER':
+      return {
+        ...state,
+        user: null,
+      };
+      break;
+
     default:
       return state;
   }
