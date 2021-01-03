@@ -40,7 +40,7 @@ function Header() {
         <Link to={!user && '/login'} className="header__link">
           <div className="header__option" onClick={handleAuth}>
             <span className="header__optionLineOne">
-              Hello {user ? user.email.split('@')[0] : 'Guest'}
+              HOLA {user ? user.email.split('@')[0] : 'Guest'}
             </span>
             <span className="header__optionLineTwo">{user ? 'Sign Out' : 'Sign In'}</span>
           </div>
