@@ -1,51 +1,84 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { auth } from '../firebase';
-import { useStateValue } from './StateProvider';
+// import { useStateValue } from './StateProvider';
 
 function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const history = useHistory();
 
-  const [, dispatch] = useStateValue();
+  // const [, dispatch] = useStateValue();
 
-  const userSignIn = (e) => {
+  const userSignIn = async (e) => {
     e.preventDefault();
-    console.warn({ email, password });
+    console.log({ email, password });
 
     // firebase login code
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .then((auth_data) => {
-        // user sign in successful
-        console.log(auth_data);
-
-        dispatch({
-          type: 'SIGN_IN_USER',
-          user: auth_data.user,
-        });
-      })
-      .catch((err) => alert(err.message));
+    try {
+      const auth_data = await auth.signInWithEmailAndPassword(email, password);
+      console.log(auth_data);
+      history.push('/');
+    } catch (err) {
+      alert(err.message);
+    }
   };
 
-  const userRegister = (e) => {
+  const userRegister = async (e) => {
     e.preventDefault();
-    console.warn({ email, password });
+    console.log({ email, password });
 
     // firebase register code
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((auth_data) => {
-        // user registration successful
-        console.log(auth_data);
-
-        dispatch({
-          type: 'REGISTER_USER',
-          user: auth_data.user,
-        });
-      })
-      .catch((err) => alert(err.message));
+    try {
+      const auth_data = await auth.createUserWithEmailAndPassword(email, password);
+      console.log(auth_data);
+      history.push('/');
+    } catch (err) {
+      alert(err.message);
+    }
   };
+
+  // <<< OLD CODE WITH DISPATCH CALLS >>> //
+
+  // const userSignIn = async (e) => {
+  //   e.preventDefault();
+  //   console.log({ email, password });
+
+  //   // firebase login code
+  //   try {
+  //     const auth_data = await auth.signInWithEmailAndPassword(email, password);
+  //     console.log(auth_data);
+
+  //     dispatch({
+  //       type: 'SIGN_IN_USER',
+  //       user: auth_data.user,
+  //     });
+
+  //     history.push('/');
+  //   } catch (err) {
+  //     alert(err.message);
+  //   }
+  // };
+
+  // const userRegister = async (e) => {
+  //   e.preventDefault();
+  //   console.log({ email, password });
+
+  //   // firebase register code
+  //   try {
+  //     const auth_data = await auth.createUserWithEmailAndPassword(email, password);
+  //     // console.log(auth_data);
+
+  //     dispatch({
+  //       type: 'REGISTER_USER',
+  //       user: auth_data.user,
+  //     });
+
+  //     history.push('/');
+  //   } catch (err) {
+  //     alert(err.message);
+  //   }
+  // };
 
   return (
     <div className="signIn">
