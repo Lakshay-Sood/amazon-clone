@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 // import React, { useState } from 'react';
 import './Checkout.scss';
 import CheckoutProduct from './CheckoutProduct';
@@ -7,6 +8,7 @@ import { useStateValue } from './StateProvider';
 function Checkout() {
   const [{ basket }] = useStateValue();
   // const [isGift, setIsGift] = useState(false);
+  const history = useHistory();
 
   const itemsInBasket = basket.reduce((acc, item) => acc + item.quantity, 0);
   const subtotalAmount = basket.reduce((acc, item) => acc + item.price * item.quantity, 0);
@@ -57,7 +59,9 @@ function Checkout() {
             <small>This order contains a gift</small>
           </label>
           <br />
-          <button type="submit">Proceed to Payment</button>
+          <button type="submit" onClick={(e) => history.push('/payment')}>
+            Proceed to Payment
+          </button>
         </div>
       )}
     </div>
