@@ -3,27 +3,27 @@ import './CardAndBill.scss';
 import { useStateValue } from './StateProvider';
 import CreditCardIcon from '@material-ui/icons/CreditCard';
 import TextField from '@material-ui/core/TextField';
+import { useHistory } from 'react-router-dom';
+import { db } from './../firebase';
 
 function CardAndBill() {
-  const [{ basket }] = useStateValue();
+  const [{ basket, user }, dispatch] = useStateValue();
   const subtotalAmount = basket.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const taxAmount = subtotalAmount * 0.05;
   const totalAmount = subtotalAmount + 2 * taxAmount;
+  const history = useHistory();
 
   const [cardNumber, setCardNumber] = useState('');
   const [cardExpiry, setCardExpiry] = useState('');
   const [cardCVV, setCardCVV] = useState('');
 
   const handleCardNumber = (e) => {
-    e.preventDefault();
-
     // Validator and Formater
     if (e.target.value.length > 12 || (!Number(e.target.value) && e.target.value !== '')) return;
     setCardNumber(e.target.value);
   };
 
   const handleCardExpiry = (e) => {
-    e.preventDefault();
     let date = e.target.value;
 
     // Validator and Formater
@@ -39,11 +39,33 @@ function CardAndBill() {
   };
 
   const handleCardCVV = (e) => {
-    e.preventDefault();
     // Validator and Formater
     if (e.target.value.length > 3 || (!Number(e.target.value) && e.target.value !== '')) return;
 
     setCardCVV(e.target.value);
+  };
+
+  const handlePurchase = (e) => {
+    // - TODO: PAYMENT FUNCTIONALITY (LATER, requires cloud functions to makae calls to stripe api => requires Blaze plan of firebase => requires credit card info
+
+    // User need to be signed in to make the purchase
+    if (!user) {
+      if (window.confirm('You need to be signed in to make the purchase. \nGo to Sign In page?')) {
+        history.push('/login');
+      }
+      return;
+    }
+
+    // - Saving basket details to the cloud firestore
+    const orderId = 'order' + user?.uid;
+    db.collection('users').doc(user?.uid).collection('orders').doc(orderId).set({
+      basket: basket,
+      amount: totalAmount,
+      boughtAt: Date.now(),
+    });
+
+    dispatch({ type: 'CLEAR_BASKET' });
+    history.replace('/orders');
   };
 
   return (
@@ -104,7 +126,9 @@ function CardAndBill() {
           <span>Total : </span>
           <span>$ {totalAmount.toFixed(2)}</span>
         </p>
-        <button className="buy-now-btn">Buy Now</button>
+        <button className="buy-now-btn" onClick={handlePurchase}>
+          Buy Now
+        </button>
       </div>
     </div>
   );
