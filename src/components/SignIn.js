@@ -39,6 +39,7 @@ function SignIn() {
   };
 
   // <<< OLD CODE WITH DISPATCH CALLS >>> //
+  // <<< now we dont need them in the uncommented code below cuz we added an event listener on authStateChange that makes the dispatch calls >>> //
 
   // const userSignIn = async (e) => {
   //   e.preventDefault();
