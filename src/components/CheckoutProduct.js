@@ -4,7 +4,7 @@ import { useStateValue } from './StateProvider';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 
-function CheckoutProduct({ item }) {
+function CheckoutProduct({ item, hideQuantityChange }) {
   const [, dispatch] = useStateValue();
 
   const removeFromBasket = () => {
@@ -41,15 +41,19 @@ function CheckoutProduct({ item }) {
         </div>
         <div className="checkoutProduct__quantity">
           <p>Quantity: </p>
-          <button className="checkoutProduct__addRemoveButton" onClick={addToBasket}>
-            <AddIcon />
-          </button>
+          {!hideQuantityChange && (
+            <button className="checkoutProduct__addRemoveButton" onClick={addToBasket}>
+              <AddIcon />
+            </button>
+          )}
           <p>
             <strong>{item.quantity}</strong>
           </p>
-          <button className="checkoutProduct__addRemoveButton" onClick={removeFromBasket}>
-            <RemoveIcon />
-          </button>
+          {!hideQuantityChange && (
+            <button className="checkoutProduct__addRemoveButton" onClick={removeFromBasket}>
+              <RemoveIcon />
+            </button>
+          )}
         </div>
       </div>
     </div>

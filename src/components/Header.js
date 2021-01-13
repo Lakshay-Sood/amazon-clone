@@ -1,6 +1,6 @@
 import React from 'react';
 import './Header.scss';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import SearchIcon from '@material-ui/icons/Search';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { useStateValue } from './StateProvider';
@@ -11,6 +11,7 @@ function Header() {
   // but we only need state.basket
   const [{ basket, user }] = useStateValue();
   const itemsInBasket = basket.reduce((acc, item) => acc + item.quantity, 0);
+  const history = useHistory();
   // console.log('Basket: ', basket);
 
   const handleAuth = () => {
@@ -18,6 +19,22 @@ function Header() {
       auth.signOut();
     }
     // if user is not signed in, <Link> takes it to /login
+  };
+
+  const checkSignIn = (e) => {
+    // User needs to be signed in to check orders
+    if (!user) {
+      if (
+        window.confirm(
+          'You need to be signed in to view your previous orders. \nGo to Sign In page?'
+        )
+      ) {
+        history.push('/login');
+      }
+
+      e.preventDefault();
+      return;
+    }
   };
 
   return (
@@ -46,7 +63,7 @@ function Header() {
           </div>
         </Link>
 
-        <Link to="/" className="header__link">
+        <Link to="/orders" className="header__link" onClick={checkSignIn}>
           <div className="header__option">
             <span className="header__optionLineOne">Returns</span>
             <span className="header__optionLineTwo">& Orders</span>

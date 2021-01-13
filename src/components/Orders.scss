@@ -1,0 +1,21 @@
+.orders__page {
+  padding: 1% 5%;
+}
+
+.title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 10px;
+  margin-top: 0;
+}
+
+.order__container {
+  background-color: white;
+  margin: 20px 0;
+  padding: 20px;
+
+  .dateAndId {
+    display: flex;
+    justify-content: space-between;
+  }
+}

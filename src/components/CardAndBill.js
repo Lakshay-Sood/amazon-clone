@@ -8,9 +8,11 @@ import { db } from './../firebase';
 
 function CardAndBill() {
   const [{ basket, user }, dispatch] = useStateValue();
-  const subtotalAmount = basket.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  const taxAmount = subtotalAmount * 0.05;
-  const totalAmount = subtotalAmount + 2 * taxAmount;
+  const subtotalAmount = Number(
+    basket.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2)
+  );
+  const taxAmount = Number((subtotalAmount * 0.05).toFixed(2));
+  const totalAmount = Number((subtotalAmount + 2 * taxAmount).toFixed(2));
   const history = useHistory();
 
   const [cardNumber, setCardNumber] = useState('');
@@ -48,7 +50,7 @@ function CardAndBill() {
   const handlePurchase = (e) => {
     // - TODO: PAYMENT FUNCTIONALITY (LATER, requires cloud functions to makae calls to stripe api => requires Blaze plan of firebase => requires credit card info
 
-    // User need to be signed in to make the purchase
+    // User needs to be signed in to make the purchase
     if (!user) {
       if (window.confirm('You need to be signed in to make the purchase. \nGo to Sign In page?')) {
         history.push('/login');
@@ -57,7 +59,7 @@ function CardAndBill() {
     }
 
     // - Saving basket details to the cloud firestore
-    const orderId = 'order' + user?.uid;
+    const orderId = 'order_' + (Math.random() * 100000).toFixed(0); //to get a 5 digit order id
     db.collection('users').doc(user?.uid).collection('orders').doc(orderId).set({
       basket: basket,
       amount: totalAmount,
@@ -111,20 +113,20 @@ function CardAndBill() {
       <div className="total-bill">
         <p className="bill__part bill__subtotal">
           <span>Subtotal :</span>
-          <span>$ {subtotalAmount.toFixed(2)}</span>
+          <span>$ {subtotalAmount}</span>
         </p>
         <p className="bill__part">
           <span>CGST @5% : </span>
-          <span>$ {taxAmount.toFixed(2)}</span>
+          <span>$ {taxAmount}</span>
         </p>
         <p className="bill__part">
           <span>SGST @5% : </span>
-          <span>$ {taxAmount.toFixed(2)}</span>
+          <span>$ {taxAmount}</span>
         </p>
         <hr />
         <p className="bill__part bill__total">
           <span>Total : </span>
-          <span>$ {totalAmount.toFixed(2)}</span>
+          <span>$ {totalAmount}</span>
         </p>
         <button className="buy-now-btn" onClick={handlePurchase}>
           Buy Now
