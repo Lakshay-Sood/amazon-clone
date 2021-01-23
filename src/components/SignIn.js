@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { auth } from '../firebase';
+import './SignIn.scss';
 // import { useStateValue } from './StateProvider';
 
 function SignIn() {
@@ -83,13 +84,15 @@ function SignIn() {
 
   return (
     <div className="signIn">
-      <Link to="/">
+      <Link to="/" className="logo__link">
         <img
           className="header__logo"
           src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.pfaf.org%2FUserFilesCms%2Famazon-logo.png&f=1&nofb=1"
           alt="amazon logo"
         />
       </Link>
+      <hr />
+      <h2>Login</h2>
       <label htmlFor="email-input">Email Id</label>
       <input
         type="email"
@@ -112,6 +115,9 @@ function SignIn() {
       <button type="submit" onClick={userRegister}>
         Register as new user
       </button>
+      <p>
+        <small>By continuing, you agree to Amazon's Conditions of Use and Privacy Notice.</small>
+      </p>
     </div>
   );
 }

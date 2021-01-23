@@ -1,0 +1,51 @@
+.signIn {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 350px;
+  padding: 2%;
+  margin: 50px auto;
+  border: 1px solid #aaa;
+
+  .logo__link {
+    display: inline-block;
+    // justify-content: center;
+    margin: 0 auto;
+    .header__logo {
+      margin: 10px;
+      padding: 5px;
+      margin-top: 0;
+      padding-top: 0;
+    }
+  }
+
+  h2 {
+    font-weight: 500;
+    margin: 10px 0;
+  }
+
+  input {
+    margin-bottom: 10px;
+    padding: 5px;
+  }
+
+  button {
+    font-weight: 600;
+    text-align: center;
+    padding: 5px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    width: 100%;
+    background-color: rgb(231, 195, 76);
+    border: rgb(95, 53, 5) 1px solid;
+  }
+
+  p {
+    margin-top: 10px;
+
+    small {
+      font-weight: 100;
+      color: #555;
+    }
+  }
+}
